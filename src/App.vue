@@ -1,9 +1,16 @@
 <template>
-  <span class="iconfont icondianzan"></span>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-export default {};
+import home from "./views/Home";
+export default {
+  components: {
+    // home
+  }
+};
 </script>
 
 <style lang="less">
