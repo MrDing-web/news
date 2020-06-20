@@ -1,32 +1,29 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <span class="iconfont icondianzan"></span>
 </template>
+
+<script>
+export default {};
+</script>
 
 <style lang="less">
 @import url("//at.alicdn.com/t/font_1426139_jm7n2373nlh.css");
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-#nav {
-  padding: 5vw;
+a {
+  color: inherit;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+a:hover {
+  text-decoration: none;
+}
 
-    &.router-link-exact-active {
-      color: #42b982;
-    }
-  }
+ul,
+li,
+ol {
+  list-style: none;
 }
 </style>
