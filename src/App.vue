@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import home from "./views/Home";
 export default {
   components: {
     // home
@@ -18,6 +17,7 @@ export default {
 * {
   margin: 0;
   padding: 0;
+  background-color: rgb(242, 242, 242);
 }
 
 a {
