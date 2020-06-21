@@ -12,6 +12,7 @@
       rule="0?(13|15|17|18)[0-9]{9}$"
       errMsg="请输入合法的手机号！"
       @sendMsg="regMobileNum"
+      @checkInput="checkNum"
     />
     <AuthPage 
     placeholderText="昵称"
@@ -19,6 +20,7 @@
     rule="^.{3,6}$" 
     errMsg="请输入三到六位字符！"
     @sendMsg="regNick"
+    @checkInput="checkNick"
     />
     <AuthPage 
     placeholderText="密码" 
@@ -26,8 +28,9 @@
     rule="^.{3,11}$" 
     errMsg="您输入的密码有误，请重新输入！"
     @sendMsg="regPwd"
+    @checkInput="checkPwd"
     />
-    <AuthBtn btnVal="注册"/>
+    <AuthBtn btnVal="注册" @click.native="register"/>
   </div>
 </template>
 
@@ -43,7 +46,10 @@ export default {
       return{
         regUsername:'',
         regNickname:'',
-        regPassword:''
+        regPassword:'',
+        checkA:false,
+        checkB:false,
+        checkC:false
 
       }
     },
@@ -56,6 +62,31 @@ export default {
       },
       regPwd(msg){
         this.regPassword = msg;
+      },
+      checkNum(i){
+        this.checkA = i;
+      },
+      checkNick(i){
+        this.checkB = i;
+      },
+      checkPwd(i){
+        this.checkC = i;
+      },
+      register(){
+        if(!(this.checkA&&this.checkB&&this.checkC)){
+          return false;
+        }
+        this.$axios({
+          url:'http://127.0.0.1:3000/register',
+          method:"POST",
+          data:{
+            username:this.regUsername,
+            password:this.regPassword,
+            nickname:this.regNickname
+          }
+        }).then(res=>{
+          console.log(res);
+        })
       }
     }
 };

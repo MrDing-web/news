@@ -27,6 +27,7 @@ export default {
       if (!this.ruleRes) {
         this.$toast.fail(this.errMsg);
       }
+      
     }
   },
   watch: {
@@ -35,6 +36,7 @@ export default {
       this.ruleRes = reg.test(newVal);
       //将输入的值传回父组件进行ajax请求
       this.$emit("sendMsg",this.inputVal)
+      this.$emit("checkInput",this.ruleRes);
     }
   }
 };

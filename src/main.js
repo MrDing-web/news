@@ -5,6 +5,9 @@ import router from './router'
 import Vant from 'vant'
 // 2. 引入组件 css 文件
 import 'vant/lib/index.css'
+import axios from "axios";
+// 绑定到原型
+Vue.prototype.$axios = axios;
 // 3. 注册 vant ui 组件库的标签
 Vue.use(Vant)
 

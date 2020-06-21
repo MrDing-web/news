@@ -20,7 +20,7 @@
     errMsg="您输入的密码有误，请重新输入！"
     @sendMsg="logPwd"
     />
-    <AuthBtn btnVal="登录"/>
+    <AuthBtn btnVal="登录" @click.native="login"/>
   </div>
 </template>
 
@@ -45,6 +45,20 @@ export default {
   },
   logPwd(msg){
     this.logPassword = msg;
+  },
+  login(){
+    console.log(1111);
+    
+    this.$axios({
+      url:"http://127.0.0.1:3000/login",
+      method:"post",
+      data:{
+        username:this.logUsername,
+        password:this.logPassword
+      }
+    }).then(res=>{
+      this.$toast.success("登录成功");
+    })
   }
   }
 };
