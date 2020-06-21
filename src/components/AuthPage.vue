@@ -33,6 +33,8 @@ export default {
     inputVal(newVal) {
       const reg = new RegExp(this.rule);
       this.ruleRes = reg.test(newVal);
+      //将输入的值传回父组件进行ajax请求
+      this.$emit("sendMsg",this.inputVal)
     }
   }
 };
