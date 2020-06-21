@@ -17,7 +17,6 @@ export default {
 * {
   margin: 0;
   padding: 0;
-  background-color: rgb(242, 242, 242);
 }
 
 a {
