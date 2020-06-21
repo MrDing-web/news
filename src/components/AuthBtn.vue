@@ -1,9 +1,11 @@
 <template>
-  <div class="loginBtn">登录</div>
+  <div class="loginBtn" :btnVal="btnVal">{{btnVal}}</div>
 </template>
 
 <script>
-export default {};
+export default {
+  props:["btnVal"]
+};
 </script>
 
 <style lang="less" scoped>

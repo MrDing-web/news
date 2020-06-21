@@ -1,43 +1,46 @@
 <template>
-  <div class="loginDiv">
+  <div class="registerDiv">
     <div class="closeLogin">
       <span class="iconfont iconicon-test"></span>
     </div>
     <div class="loginLogo">
       <span class="iconfont iconnew"></span>
     </div>
+    <AuthPage
+      placeholderText="手机号"
+      inputType="text"
+      rule="0?(13|15|17|18)[0-9]{9}$"
+      errMsg="请输入合法的手机号！"
+    />
     <AuthPage 
-    placeholderText="手机号" 
+    placeholderText="昵称"
     inputType="text" 
-    rule="0?(13|15|17|18)[0-9]{9}$"
-    errMsg="请输入合法的手机号！"
+    rule="^.{3,6}$" 
+    errMsg="请输入三到六位字符！"
     />
     <AuthPage 
     placeholderText="密码" 
     inputType="password" 
-    rule="^.{3,11}$"
+    rule="^.{3,11}$" 
     errMsg="您输入的密码有误，请重新输入！"
     />
-    <AuthBtn btnVal="登录"/>
+    <AuthBtn btnVal="注册"/>
   </div>
 </template>
 
 <script>
 import AuthPage from "../components/AuthPage.vue";
 import AuthBtn from "../components/AuthBtn.vue";
-
 export default {
-  components: {
-    AuthPage,
-    AuthBtn
-  }
+    components:{
+        AuthPage,
+        AuthBtn
+    }
 };
 </script>
-
-<style lang='less' scoped>
-.loginDiv {
+<style lang="less" scoped>
+.registerDiv {
   width: 100vw;
-
   .closeLogin {
     padding: 5.56vw 5.56vw 0 5.56vw;
 
