@@ -1,7 +1,9 @@
 <template>
   <div class="homeContent">
-    <router-link to="/login">登录页</router-link> -->
+    <router-link to="/login">登录页</router-link>
+    <br>
     <router-link to="/register">注册页</router-link>
+    <br>
     <router-link to="/personal">个人中心</router-link>
     <header>
       <div class="homeLogo">
@@ -16,7 +18,7 @@ export default {
   components: {}
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 header {
   height: 13.61vw;
   width: 100vw;

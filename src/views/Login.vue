@@ -9,7 +9,7 @@
     <AuthPage
       placeholderText="手机号"
       inputType="text"
-      rule="0?(13|15|17|18)[0-9]{9}$"
+      rule="^.{3,11}$"
       errMsg="请输入合法的手机号！"
       @sendMsg="logMObilePhone"
       @checkInput="checkNum"
@@ -21,8 +21,10 @@
       errMsg="您输入的密码有误，请重新输入！"
       @sendMsg="logPwd"
       @checkInput="checkPwd"
+      @keyup.native.enter="login"
     />
     <AuthBtn btnVal="登录" @click.native="login" />
+  >
   </div>
 </template>
 
@@ -56,7 +58,7 @@ export default {
     checkPwd(i){
       this.checkB = i;
     },
-    login() {
+    login(e) {
       if(!(this.checkA&&this.checkB)){
           return false;
         }
@@ -72,7 +74,9 @@ export default {
         const { message, data } = res.data;
         if (message === "登录成功") {
           this.$toast.success(message);
-          this.$router.push({ path: "/" });
+          localStorage.setItem("token",data.token);
+          localStorage.setItem("userId",data.user.id);
+          this.$router.push({ path: "/personal" });
         } else {
           this.$toast.fail('用户名或密码错误！');
         }

@@ -1,0 +1,107 @@
+<template>
+  <div class="content">
+    <header>
+      <div class="profile">
+        <img :src="'http://127.0.0.1:3000'+headImg" />
+      </div>
+      <div class="perInfo">
+        <div class="nickName">
+          <span v-if="gender === 1" class="iconfont iconxingbienan"></span>
+          <span v-else class="iconfont iconxingbienv"></span>
+          {{nickname}}
+        </div>
+        <div class="date">{{createDate.split("T")[0]}}</div>
+      </div>
+      <span class="iconfont iconjiantou1"></span>
+    </header>
+    <div class="fengetiao"></div>
+    <PersonalOpt myfocus="我的关注" focusper="关注的用户" />
+    <PersonalOpt myfocus="我的跟帖" focusper="跟帖 / 回复" />
+    <PersonalOpt myfocus="我的收藏" focusper="文章 / 视频" />
+    <PersonalOpt myfocus="设置" />
+  </div>
+</template>
+
+<script>
+import PersonalOpt from "@/components/PersonalOpt.vue";
+export default {
+  components: {
+    PersonalOpt
+  },
+  data() {
+    return {
+      createDate: "2020-6-23",
+      gender: 0,
+      headImg: "",
+      nickname: ""
+    };
+  },
+  mounted() {
+    this.$axios({
+      method: "get",
+      url: "http://127.0.0.1:3000/user/" + localStorage.getItem("userId"),
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    }).then(res => {
+      console.log(res);
+      
+      const { message, data } = res.data;
+      this.createDate = data.create_date;
+      this.gender = data.gender;
+      this.headImg = data.head_img;
+      this.nickname = data.nickname;
+    });
+  }
+};
+</script>
+  
+<style lang="less" scoped>
+header {
+  height: 36.11vw;
+  width: 100vw;
+  display: flex;
+  padding: 5.83vw;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  .profile {
+    width: 19.44vw;
+    height: 19.44vw;
+    img {
+      width: 19.44vw;
+      height: 19.44vw;
+      border-radius: 50%;
+    }
+  }
+  .perInfo {
+    flex: 1;
+    color: #333;
+    margin-left: 2.78vw;
+    font-size: 3.89vw;
+    div {
+      margin: 2.78vw;
+    }
+    .date {
+      color: rgb(160, 160, 160);
+    }
+    .iconxingbienv {
+      color: #f13fbc;
+      font-size: 3.89vw;
+    }
+    .iconxingbienan {
+      color: #7cb4dc;
+      font-size: 3.89vw;
+    }
+  }
+  .iconjiantou1 {
+    color: rgb(160, 160, 160);
+    font-size: 5vw;
+  }
+}
+.fengetiao {
+  width: 100vw;
+  height: 1.39vw;
+  background-color: rgb(228, 228, 228);
+}
+</style>

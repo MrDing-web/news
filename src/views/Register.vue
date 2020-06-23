@@ -9,7 +9,7 @@
     <AuthPage
       placeholderText="手机号"
       inputType="text"
-      rule="0?(13|15|17|18)[0-9]{9}$"
+      rule="^.{3,11}$"
       errMsg="请输入合法的手机号！"
       @sendMsg="regMobileNum"
       @checkInput="checkNum"
