@@ -2,7 +2,7 @@
   <div class="content">
     <header>
       <div class="profile">
-        <img :src="'http://127.0.0.1:3000'+headImg" />
+        <img v-if="headImg" :src="'http://127.0.0.1:3000'+headImg" />
       </div>
       <div class="perInfo">
         <div class="nickName">
@@ -44,8 +44,6 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     }).then(res => {
-      console.log(res);
-      
       const { message, data } = res.data;
       this.createDate = data.create_date;
       this.gender = data.gender;
