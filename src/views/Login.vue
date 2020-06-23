@@ -13,6 +13,7 @@
       errMsg="请输入合法的手机号！"
       @sendMsg="logMObilePhone"
       @checkInput="checkNum"
+      @keyup.native.enter="login"
     />
     <AuthPage
       placeholderText="密码"
@@ -23,8 +24,11 @@
       @checkInput="checkPwd"
       @keyup.native.enter="login"
     />
-    <AuthBtn btnVal="登录" @click.native="login" />
-  >
+    <AuthBtn 
+    btnVal="登录" 
+    @click.native="login" 
+    btnColor="rgb(53, 73, 94)"
+    />
   </div>
 </template>
 

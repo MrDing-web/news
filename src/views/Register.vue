@@ -30,7 +30,11 @@
     @sendMsg="regPwd"
     @checkInput="checkPwd"
     />
-    <AuthBtn btnVal="注册" @click.native="register"/>
+    <AuthBtn 
+    btnVal="注册" 
+    @click.native="register"
+    btnColor="rgb(53, 73, 94)"
+    />
   </div>
 </template>
 

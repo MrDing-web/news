@@ -18,15 +18,24 @@
     <PersonalOpt myfocus="我的关注" focusper="关注的用户" />
     <PersonalOpt myfocus="我的跟帖" focusper="跟帖 / 回复" />
     <PersonalOpt myfocus="我的收藏" focusper="文章 / 视频" />
-    <PersonalOpt myfocus="设置" />
+    <PersonalOpt myfocus="设置" @click.native = "toEdit" />
+    <div class="logout">
+      <AuthBtn 
+      btnVal="退出登录" 
+      btnColor="rgb(204, 51, 0)"
+      @click.native="logout"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import PersonalOpt from "@/components/PersonalOpt.vue";
+import AuthBtn from "@/components/AuthBtn.vue";
 export default {
   components: {
-    PersonalOpt
+    PersonalOpt,
+    AuthBtn
   },
   data() {
     return {
@@ -49,7 +58,17 @@ export default {
       this.gender = data.gender;
       this.headImg = data.head_img;
       this.nickname = data.nickname;
-    });
+    })
+  },
+  methods:{
+    toEdit(){
+      this.$router.push({path:"/editinfo"});
+    },
+    logout(){
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      this.$router.replace({path:"/login"})
+    }
   }
 };
 </script>
@@ -101,5 +120,11 @@ header {
   width: 100vw;
   height: 1.39vw;
   background-color: rgb(228, 228, 228);
+}
+.logout{
+  // height: 100px;
+  width: 100vw;
+  position: absolute;
+  bottom: 16.67vw;
 }
 </style>
