@@ -8,7 +8,12 @@
 
 <script>
 export default {
-    props:["myfocus","focusper"]
+    props:["myfocus","focusper"],
+    data(){
+      return{
+        
+      }
+    }
 };
 </script>
 
@@ -31,7 +36,7 @@ export default {
       flex: 1;
       font-size: 3.33vw;
       text-align: right;
-      margin-right: 10px;
+      margin-right: 2.78vw;
       color: rgb(160,160, 160);
   }
   .iconjiantou1{

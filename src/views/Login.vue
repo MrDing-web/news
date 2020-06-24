@@ -27,7 +27,7 @@
     <AuthBtn 
     btnVal="登录" 
     @click.native="login" 
-    btnColor="rgb(53, 73, 94)"
+    :btnColor="changeColor"
     />
   </div>
 </template>
@@ -46,7 +46,8 @@ export default {
       logUsername: "",
       logPassword: "",
       checkA:false,
-      checkB:false
+      checkB:false,
+      changeColor:'#aaa'
     };
   },
   methods: {
@@ -65,7 +66,10 @@ export default {
     login(e) {
       if(!(this.checkA&&this.checkB)){
           return false;
+        }else{
+        this.changeColor="red"  
         }
+     
       this.$axios({
         url: "http://127.0.0.1:3000/login",
         method: "post",
