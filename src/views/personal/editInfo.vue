@@ -1,11 +1,11 @@
 <template>
   <div class="content">
     <header>
-      <span class="iconfont iconjiantou2"></span>
+      <span @click="backPer" class="iconfont iconjiantou2"></span>
       <p>编辑资料</p>
     </header>
     <div class="profile">
-      <img v-if="headImg" :src="'http://127.0.0.1:3000' + headImg" alt />
+      <img v-if="headImg" :src="$axios.defaults.baseURL + headImg" alt />
     </div>
 
     <PersonalOpt 
@@ -19,18 +19,24 @@
     />
     <PersonalOpt 
     myfocus="性别" 
-    :focusper="gender===0?'女':'男'"
-    
-    />
+    :focusper="gender===0?'女':'男'"/>
     <div class="exitLogin">
       <AuthBtn btnVal="确定" btnColor="rgb(65, 184, 131)"/>
     </div>
+    <van-cell-group>
+      <van-field v-model="value" label="文本" placeholder="请输入用户名" />
+    </van-cell-group>
   </div>
+
+
 </template>
 
 <script>
 import PersonalOpt from "@/components/PersonalOpt.vue";
 import AuthBtn from "@/components/AuthBtn.vue";
+import Vue from 'vue';
+import { Field } from 'vant';
+Vue.use(Field);
 export default {
   components: {
     PersonalOpt,
@@ -41,14 +47,15 @@ export default {
       gender:"",
       headImg:"",
       nickname:"",
-      password:"",
-      nickFlag:false
+      password:"******",
+      nickFlag:false,
+      value: ''
     }
   },
   mounted(){
     this.$axios({
       method:"get",
-      url:"http://127.0.0.1:3000/user/"+localStorage.getItem("userId"),
+      url:"/user/"+localStorage.getItem("userId"),
       headers:{
         Authorization:"Bearer " + localStorage.getItem("token")
       }
@@ -57,15 +64,14 @@ export default {
       this.gender = data.gender;
       this.headImg = data.head_img;
       this.nickname = data.nickname;
-      const pwd = data.password;
-      let j = '';
-      for (let i = 0; i < pwd.length; i++) {
-        j += "*";
-      }
-      this.password = j;
 
 
     })
+  },
+  methods:{
+    backPer(){
+      this.$router.back();
+    }
   }
 };
 </script>
@@ -73,22 +79,22 @@ export default {
 <style lang = "less" scoped>
 header {
   position: relative;
-  height: 56px;
-  line-height: 56px;
+  height: 15.56vw;
+  line-height: 15.56vw;
   background-color: #ccc;
   p {
     text-align: center;
-    font-size: 14px;
+    font-size: 3.89vw;
     font-weight: 700;
   }
   span {
     position: absolute;
-    margin-left: 16px;
+    margin-left: 4.44vw;
   }
 }
   .profile {
-      height: 100px;
-      width: 360px;
+      height: 27.78vw;
+      width: 100vw;
       display: flex;
       justify-content: center;
       align-items: center;

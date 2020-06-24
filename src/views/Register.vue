@@ -81,7 +81,7 @@ export default {
           return false;
         }
         this.$axios({
-          url:'http://127.0.0.1:3000/register',
+          url:'/register',
           method:"POST",
           data:{
             username:this.regUsername,
@@ -89,7 +89,8 @@ export default {
             nickname:this.regNickname
           }
         }).then(res=>{
-          console.log(res);
+          this.$toast.success("注册成功！")
+          // this.$router.push({path:"/personal"});
         })
       }
     }
