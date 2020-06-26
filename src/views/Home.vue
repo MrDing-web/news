@@ -11,7 +11,7 @@
       </div>
       <div class="search">
         <span class="iconfont iconsearch"></span>
-        <input type="text" readonly value="搜索新闻">
+        <input type="text" readonly value="搜索新闻" @click="toSearch">
       </div>
       <div class="personal">
         <span class="iconfont iconwode" @click="toPersonal"></span>
@@ -28,6 +28,9 @@ export default {
   methods:{
     toPersonal(){
       this.$router.push({path:"/personal"});
+    },
+    toSearch(){
+      this.$router.push({path:"/search"});
     }
   }
 };

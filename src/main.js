@@ -28,6 +28,13 @@ router.beforeEach((to, from, next) => {
   }
   next();
 })
+// axios 请求拦截器
+axios.interceptors.request.use((config)=>{
+  if (!config.headers.Authorization && localStorage.getItem('token')) {
+    config.headers.Authorization = localStorage.getItem('token');
+  }
+  return config;
+})
 // axios响应拦截器
 axios.interceptors.response.use(res => {
   const {message, statusCode} = res.data;

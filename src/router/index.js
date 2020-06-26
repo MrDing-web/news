@@ -5,39 +5,45 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Personal from '../views/personal/index.vue'
 import EditInfo from '../views/personal/editInfo.vue'
+import Search from '../views/Search.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path:'/login',
-    name:'Login',
-    component:Login
-  },
-  {
-    path:'/register',
-    name:'Register',
-    component:Register
-  },
-  {
-    path:'/personal',
-    name:'Personal',
-    component:Personal
-  },
-  {
-    path:'/editinfo',
-    name:'EditInfo',
-    component:EditInfo
-  }
+const routes = [
+    {
+        path: '/',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: Register
+    },
+    {
+        path: '/personal',
+        name: 'Personal',
+        component: Personal
+    },
+    {
+        path: '/editinfo',
+        name: 'EditInfo',
+        component: EditInfo
+    },
+    {
+        path: '/search',
+        name: 'Search',
+        component: Search
+    }
 ]
 
 const router = new VueRouter({
-  routes
+    routes
 })
 
 export default router
