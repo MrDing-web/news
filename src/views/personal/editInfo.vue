@@ -188,7 +188,6 @@ export default {
           gender:this.gender
         }
       }).then(res=>{
-        // console.log(res);
         const { message,data} = res.data;
         if(message === "修改成功"){
           this.$toast.success("修改成功");
@@ -202,7 +201,6 @@ export default {
           Authorization: "Bearer " + localStorage.getItem("token")
         }
       }).then(res=>{
-        console.log(res);
         const {message,data} = res.data;
         if(message === "文件上传成功"){
           this.$axios({
