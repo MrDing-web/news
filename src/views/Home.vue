@@ -6,27 +6,56 @@
             </div>
             <div class="search">
                 <span class="iconfont iconsearch"></span>
-                <input type="text" readonly value="搜索新闻" @click="toSearch">
+                <input type="text" readonly value="搜索新闻" @click="$router.push({path:'/search'})">
             </div>
             <div class="personal">
-                <span class="iconfont iconwode" @click="toPersonal"></span>
+                <span class="iconfont iconwode" @click="$router.push({path:'/personal'})"></span>
             </div>
         </header>
-        <van-tabs :active="active" bind:change="onChange">
+        <van-tabs v-model="active">
             <van-tab v-for="item in categoryList" :key="item.id" :title="item.name">
-                <ul>
-                    <li>
+                <div v-for="newsItem in newsList" :key="newsItem.id">
+                    <div v-if="newsItem.type === 1 && newsItem.cover.length < 3">
                         <div class="singleImg">
                             <div class="left">
-                                <div class="title">林志玲穿透视黑纱裙米兰看秀,腹部微隆显孕味</div>
-                                <div class="info">火星时报 52跟帖</div>
+                                <div class="title">{{newsItem.title}}</div>
+                                <div class="info">{{newsItem.user.nickname}} {{newsItem.comment_length}}跟帖</div>
                             </div>
                             <div class="right">
-                                <img src="../../dist/img/logo.82b9c7a5.png" alt="">
+                                <img :src="newsItem.cover[0].url" alt="">
                             </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="multiImg" v-if="newsItem.type === 1 && newsItem.cover.length >=3">
+                        <div class="title">
+                            {{newsItem.title}}
+                        </div>
+                        <div class="imgs">
+                            <img :src="newsItem.cover[0].url" alt="">
+                            <img :src="newsItem.cover[1].url" alt="">
+                            <img :src="newsItem.cover[2].url" alt="">
+                        </div>
+                        <div class="info">
+                            {{newsItem.user.nickname}} {{newsItem.comment_length}}跟帖
+                        </div>
+                    </div>
+
+
+                    <div class="video" v-if="newsItem.type === 2&&newsItem.cover.length >= 1">
+                        <div class="title">{{newsItem.title}}</div>
+                        <div class="playArea">
+                            <img :src="newsItem.cover[0].url" alt="" class="playCover">
+                            <div class="playBtn">
+                                <span class="iconfont iconshipin"></span>
+                            </div>
+                        </div>
+                        <div class="info">
+                            {{newsItem.user.nickname}} {{newsItem.comment_length}}跟帖
+                        </div>
+                    </div>
+
+
+                </div>
             </van-tab>
         </van-tabs>
     </div>
@@ -35,20 +64,36 @@
 <script>
 
     export default {
-        components: {},
         data() {
             return {
-                active: 1,
-                categoryList: []
+                active: 0,
+                categoryList: [],
+                postId: '0',
+                newsList: []
             }
         },
         methods: {
-            toPersonal() {
-                this.$router.push({path: "/personal"});
-            },
-            toSearch() {
-                this.$router.push({path: "/search"});
+            getNews() {
+                this.$axios({
+                    url: "/post",
+                    method: "get",
+                    params: {
+                        category: this.postId
+                    }
+                }).then(res => {
+                    const data = res.data.data;
+                    this.newsList = data;
+                    console.log(data);
+                })
             }
+        },
+        watch: {
+            //获取栏目的id
+            //难点
+            active() {
+                this.postId = this.categoryList[this.active].id;
+                this.getNews();
+            },
         },
         created() {
             this.$axios({
@@ -57,7 +102,8 @@
             }).then(res => {
                 const data = res.data.data;
                 this.categoryList = data;
-            })
+            });
+            this.getNews();
         }
     };
 </script>
@@ -138,34 +184,112 @@
 
     .singleImg {
         box-sizing: border-box;
-        width: 360px;
-        height: 104px;
-        padding: 20px 10px;
+        width: 100vw;
+        height: 28.89vw;
+        padding: 5.56vw 2.78vw;
         border-bottom: 1px solid #ddd;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        .left{
-            .title{
-                font-size: 16px;
-                color:rgb(50,50,50);
+
+        .left {
+            .title {
+                font-size: 4.44vw;
+                color: rgb(50, 50, 50);
             }
-            .info{
-               color: #888;
-                font-size: 12px;
-                margin-top: 8px;
+
+            .info {
+                color: #888;
+                font-size: 3.33vw;
+                margin-top: 2.22vw;
             }
         }
+
         .right {
-            width: 100px;
-            height: 60px;
-            border: 1px solid #777;
+            width: 27.78vw;
+            height: 16.67vw;
+
             img {
-                width: 100px;
-                height: 60px;
+                width: 27.78vw;
+                height: 16.67vw;
                 object-fit: cover;
             }
         }
     }
 
+    .multiImg {
+        padding: 4.44vw 2.78vw;
+        border-bottom: 1px solid #e4e4e4;
+
+        .title {
+            font-size: 4.44vw;
+            color: rgb(50, 50, 50);
+        }
+
+        .imgs {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.11vw 0 2.22vw;
+
+            img {
+                width: 33%;
+                height: 16.67vw;
+                object-fit: cover;
+            }
+        }
+
+        .info {
+            font-size: 3.33vw;
+            color: #888;
+        }
+    }
+
+    .video {
+        display: flex;
+        flex-direction: column;
+        padding: 4.44vw 2.78vw;
+        border-bottom: 1px solid #e4e4e4;
+        width: 100vw;
+        height: 69.44vw;
+        box-sizing: border-box;
+        justify-content: space-between;
+
+
+        .title {
+            font-size: 4.44vw;
+            color: rgb(50, 50, 50);
+        }
+        .playArea{
+            flex: 1;
+            display: flex;
+            /*padding: 20px;*/
+            box-sizing: border-box;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            .playCover{
+                position: absolute;
+                width: 100%;
+                height: 90%;
+                opacity: 0.6;
+            }
+            .playBtn{
+                width: 12.78vw;
+                height: 12.78vw;
+                line-height: 12.78vw;
+                text-align: center;
+                background-color: #aaa;
+                border-radius: 50%;
+                color: #fff;
+                z-index: 3;
+                span{
+                    font-size: 10vw;
+                }
+            }
+        }
+        .info {
+            font-size: 3.33vw;
+            color: #888;
+        }
+    }
 </style>
