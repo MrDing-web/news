@@ -84,7 +84,7 @@ export default {
           this.$toast.success(message);
           localStorage.setItem("token",data.token);
           localStorage.setItem("userId",data.user.id);
-          this.$router.push({ path: "/personal" });
+          this.$router.push({ path: "/" });
         } else {
           this.$toast.fail('用户名或密码错误！');
         }

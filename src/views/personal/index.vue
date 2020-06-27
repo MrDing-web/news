@@ -15,7 +15,11 @@
             <span @click="toSetting" class="iconfont iconjiantou1"></span>
         </header>
         <div class="fengetiao"></div>
-        <PersonalOpt myfocus="我的关注" focusper="关注的用户"/>
+        <PersonalOpt
+                myfocus="我的关注"
+                focusper="关注的用户"
+                @click.native="$router.push({path:'/myfocus'})"
+        />
         <PersonalOpt myfocus="我的跟帖" focusper="跟帖 / 回复"/>
         <PersonalOpt myfocus="我的收藏" focusper="文章 / 视频"/>
         <PersonalOpt myfocus="设置" @click.native="toEdit"/>

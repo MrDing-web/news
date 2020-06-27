@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <header>
-      <span @click="backPer" class="iconfont iconjiantou2"></span>
+      <span @click="$router.back()" class="iconfont iconjiantou2"></span>
       <p>编辑资料</p>
     </header>
     <div class="profile">
@@ -130,9 +130,6 @@ export default {
     })
   },
   methods:{
-    backPer(){
-      this.$router.back();
-    },
     changeNickname(){
       this.title = "修改昵称";
       this.show = true;
@@ -228,7 +225,6 @@ header {
   position: relative;
   height: 15.56vw;
   line-height: 15.56vw;
-  background-color: #ccc;
   p {
     text-align: center;
     font-size: 3.89vw;
@@ -245,7 +241,6 @@ header {
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #eee;
       position: relative;
     img{
       width: 19.44vw;

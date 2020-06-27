@@ -1,15 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import Personal from '../views/personal/index.vue'
-import EditInfo from '../views/personal/editInfo.vue'
-import Search from '../views/Search.vue'
+import Home from '@/views/Home.vue'
+import Login from '@/views/Login.vue'
+import Register from '@/views/Register.vue'
+import Personal from '@/views/personal/index.vue'
+import EditInfo from '@/views/personal/editInfo.vue'
+import Search from '@/views/Search.vue'
+import Myfocus from "@/views/personal/myfocus.vue"
+import Test from "@/views/test.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: "/test",
+        component: Test
+    },
     {
         path: '/',
         name: 'Home',
@@ -39,6 +45,11 @@ const routes = [
         path: '/search',
         name: 'Search',
         component: Search
+    },
+    {
+        path: '/myfocus',
+        name: 'myfocus',
+        component: Myfocus
     }
 ]
 
