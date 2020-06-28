@@ -14,7 +14,7 @@
         </header>
         <van-tabs v-model="active">
             <van-tab class="categoryList" v-for="item in categoryList" :key="item.id" :title="item.name">
-                <div v-for="newsItem in newsList" :key="newsItem.id">
+                <div v-for="newsItem in item.postList" :key="newsItem.id">
 
 
                     <div v-if="newsItem.type === 1 && newsItem.cover.length < 3 && newsItem.cover.length > 0">
@@ -85,8 +85,12 @@
                         category: this.postId
                     }
                 }).then(res => {
-                    const data = res.data.data;
-                    this.newsList = data;
+                    //获取当前页面
+                    const currentCategory = this.categoryList[this.active];
+                    console.log(currentCategory);
+                    currentCategory.postList = [...res.data.data];
+                    // this.newsList = newData;
+                    // console.log(newData);
                 })
             }
         },
@@ -95,7 +99,9 @@
             //难点
             active() {
                 this.postId = this.categoryList[this.active].id;
-                this.getNews();
+                if (this.categoryList[this.active].postList.length === 0) {
+                    this.getNews();
+                }
             },
         },
         created() {
@@ -103,8 +109,13 @@
                 url: "/category",
                 method: "get"
             }).then(res => {
-                const data = res.data.data;
-                this.categoryList = data;
+                const newData = res.data.data.map(category => {
+                    return {
+                        ...category,
+                        postList: []
+                    }
+                })
+                this.categoryList = newData;
             });
             this.getNews();
         }
