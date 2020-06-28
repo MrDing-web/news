@@ -50,9 +50,15 @@ axios.interceptors.response.use(res => {
     // 跳转到登录页
     router.push("/login");
   }
-
-
   return res;
+})
+
+Vue.filter("fixPicUrl",function (str) {
+  const fullUrlReg = /^http/;
+  if(!fullUrlReg.test(str)){
+    return axios.defaults.baseURL + str;
+  }
+  return str;
 })
 
 new Vue({

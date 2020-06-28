@@ -78,7 +78,6 @@ export default {
           password: this.logPassword
         }
       }).then(res => {
-        console.log(res.data);
         const { message, data } = res.data;
         if (message === "登录成功") {
           this.$toast.success(message);
