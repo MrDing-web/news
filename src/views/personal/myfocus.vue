@@ -14,7 +14,8 @@
                     <div class="title">{{item.nickname}}</div>
                     <div class="date">{{item.create_date.split("T")[0]}}</div>
                 </div>
-                <div class="unFocus" @click="unFocus(item.id)">取消关注</div>
+                <div v-if="item.isFollow" class="unFocus" @click="unFocus(item.id,item)">取消关注</div>
+                <div v-else class="focus" @click="focus(item.id,item)">关注</div>
             </li>
         </ul>
     </div>
@@ -37,16 +38,28 @@
                     url:"/user_follows",
                     method:"get"
                 }).then(res => {
-                    const data = res.data.data;
-                    this.focusList = data;
+                    const newData = res.data.data.map(item=>{
+                        return {...item,isFollow:true}
+                    })
+                    this.focusList = newData;
                 })
             },
-            unFocus(id){
+            unFocus(id,item){
                 this.$axios({
                     url:"/user_unfollow/" + id,
                     method: "get"
                 }).then(res=>{
-                    this.loadPage();
+                    // this.loadPage();
+                    item.isFollow = false;
+                })
+            },
+            focus(id,item){
+                this.$axios({
+                    url:'/user_follows/' + id,
+                    method:"get",
+                    ":id":id
+                }).then(res=>{
+                    item.isFollow = true;
                 })
             }
         }
@@ -106,7 +119,17 @@
         line-height: 8.33vw;
         border-radius: 4.17vw;
         font-size: 3.33vw;
-        background-color: #e1e1e1;
+        background-color: #ccc;
+        text-align: center;
+        color: #fff;
+    }
+    .focus{
+        width: 19.44vw;
+        height: 8.33vw;
+        line-height: 8.33vw;
+        border-radius: 4.17vw;
+        font-size: 3.33vw;
+        background-color: #f00;
         text-align: center;
         color: #fff;
     }
