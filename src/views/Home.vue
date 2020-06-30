@@ -12,86 +12,70 @@
                 <span class="iconfont iconwode" @click="$router.push({path:'/personal'})"></span>
             </div>
         </header>
-        <van-tabs v-model="active">
-            <van-tab class="categoryList" v-for="item in categoryList" :key="item.id" :title="item.name">
-                <div v-for="newsItem in item.postList" :key="newsItem.id">
-
-
-                    <div v-if="newsItem.type === 1 && newsItem.cover.length < 3 && newsItem.cover.length > 0">
-                        <div class="singleImg">
-                            <div class="left">
-                                <div class="title">{{newsItem.title}}</div>
-                                <div class="info">{{newsItem.user.nickname}} {{newsItem.comment_length}}跟帖</div>
-                            </div>
-                            <div class="right">
-                                <img :src="newsItem.cover[0].url|fixPicUrl" alt="">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="multiImg" v-if="newsItem.type === 1 && newsItem.cover.length >=3">
-                        <div class="title">
-                            {{newsItem.title}}
-                        </div>
-                        <div class="imgs">
-                            <img :src="newsItem.cover[0].url" alt="">
-                            <img :src="newsItem.cover[1].url" alt="">
-                            <img :src="newsItem.cover[2].url" alt="">
-                        </div>
-                        <div class="info">
-                            {{newsItem.user.nickname}} {{newsItem.comment_length}}跟帖
-                        </div>
-                    </div>
-
-
-                    <div class="video" v-if="newsItem.type === 2 && newsItem.cover.length >= 1">
-                        <div class="title">{{newsItem.title}}</div>
-                        <div class="playArea">
-                            <img :src="newsItem.cover[0].url" alt="" class="playCover">
-                            <div class="playBtn">
-                                <span class="iconfont iconshipin"></span>
-                            </div>
-                        </div>
-                        <div class="info">
-                            {{newsItem.user.nickname}} {{newsItem.comment_length}}跟帖
-                        </div>
-                    </div>
-
-
-                </div>
+        <van-tabs v-model="active" sticky swipeable>
+            <van-tab class="categoryList" v-for="item in categoryList" :key="item.id" :title="item.name" >
+                <van-list
+                        v-model="item.loading"
+                        :finished="item.finished"
+                        finished-text="我也是有底线的！"
+                        @load="loadMorePost"
+                        :immediate-check="false"
+                >
+                    <NewsView :list="item.postList"/>
+                </van-list>
             </van-tab>
         </van-tabs>
     </div>
 </template>
-
 <script>
-
+    import NewsView from '@/components/newsView.vue';
     export default {
+        components:{
+            NewsView
+        },
         data() {
             return {
                 active: 0,
                 categoryList: [],
                 postId: '0',
-                newsList: []
+                loading: false
             }
         },
         methods: {
             getNews() {
+                //获取当前页面
+                const currentCategory = this.categoryList[this.active];
                 this.$axios({
                     url: "/post",
                     method: "get",
                     params: {
-                        category: this.postId
+                        category: this.postId,
+                        pageIndex: currentCategory.pageIndex,
+                        pageSize: currentCategory.pageSize
                     }
                 }).then(res => {
-                    //获取当前页面
-                    const currentCategory = this.categoryList[this.active];
-                    console.log(currentCategory);
-                    currentCategory.postList = [...res.data.data];
-                    // this.newsList = newData;
-                    // console.log(newData);
+                    // console.log(currentCategory);
+                    currentCategory.postList = [...currentCategory.postList,...res.data.data];
+                    // 这里加载完了文章列表数据, 然后需要手动将当前栏目的加载状态改回 false 也就是没有正在加载
+                    // 这样子才能在下次拉到底的时候重新触发加载下一页
+                    currentCategory.loading = false;
+
+                    // 最后如果发现数据已经到了尽头, 应该告诉组件已经完毕, 禁止再次发送请求
+                    // 什么时候我们知道已经加载完了全部数据
+                    // 我们设置了每页长度, 正常情况下数据库应该返回对应的数据,
+                    // 如果有一次, 返回的数据数量比规定页面长度小, 那么知道数据库已经见底
+                    if (res.data.data.length < currentCategory.pageSize) {
+                        currentCategory.finished = true;
+                    }
                 })
+            },
+            loadMorePost(){
+                // 读取更多文章, 实际上
+                // 就是将当前栏目的 pageIndex 加一
+                // 发送文章获取请求即可
+                const currentCategory = this.categoryList[this.active]
+                currentCategory.pageIndex += 1
+                this.getNews();
             }
         },
         watch: {
@@ -109,15 +93,23 @@
                 url: "/category",
                 method: "get"
             }).then(res => {
-                const newData = res.data.data.map(category => {
+                this.categoryList = res.data.data.map(category => {
                     return {
                         ...category,
-                        postList: []
+                        postList: [],
+                        //当前页码
+                        pageIndex:1,
+                        //每页新闻数
+                        pageSize:5,
+                        //是否正在加载
+                        loading:false,
+                        //是否已经加载完毕
+                        finished:false
                     }
                 })
-                this.categoryList = newData;
+                this.getNews();
             });
-            this.getNews();
+
         }
     };
 </script>
@@ -129,9 +121,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        position: sticky;
-        top: 0;
-        z-index: 999;
+        /*position: sticky;*/
+        /*top: 0;*/
+        /*z-index: 999;*/
 
         .homeLogo {
             color: rgb(255, 255, 255);

@@ -7,7 +7,9 @@ import Personal from '@/views/personal/index.vue'
 import EditInfo from '@/views/personal/editInfo.vue'
 import Search from '@/views/Search.vue'
 import Myfocus from "@/views/personal/myfocus.vue"
+import MyCollect from "@/views/personal/mycollect.vue"
 import Test from "@/views/test.vue"
+import PostDetail from "@/views/PostDetail.vue"
 
 Vue.use(VueRouter)
 
@@ -20,6 +22,11 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/postdetail',
+        name: 'PostDetail',
+        component: PostDetail
     },
     {
         path: '/login',
@@ -40,6 +47,11 @@ const routes = [
         path: '/editinfo',
         name: 'EditInfo',
         component: EditInfo
+    },
+    {
+        path: '/collect',
+        name: 'myCollection',
+        component: MyCollect
     },
     {
         path: '/search',

@@ -1,14 +1,13 @@
 <template>
     <div class="container">
         <header>
-            <span @click="$router.push({path:'/personal'})" class="iconfont iconjiantou2"></span>
+            <span @click="$router.back()" class="iconfont iconjiantou2"></span>
             <p>我的关注</p>
         </header>
         <ul>
             <li class="focusItem" v-for="item in focusList" :key="item.id">
                 <div class="profile">
                     <img v-if="item.head_img" :src="$axios.defaults.baseURL + item.head_img" alt="">
-                    <img v-else src="../../../dist/img/logo.82b9c7a5.png" alt="">
                 </div>
                 <div class="content">
                     <div class="title">{{item.nickname}}</div>

@@ -1,8 +1,13 @@
 <template>
     <div class="content">
         <header>
+            <span @click="$router.back()" class="iconfont iconjiantou2"></span>
+            <p>个人中心</p>
+        </header>
+        <main>
             <div class="profile">
                 <img v-if="headImg" :src="$axios.defaults.baseURL+headImg"/>
+                <img v-else src="../../../src/assets/pq.jpg"/>
             </div>
             <div class="perInfo">
                 <div class="nickName" v-cloak>
@@ -13,7 +18,7 @@
                 <div class="date">{{createDate.split("T")[0]}}</div>
             </div>
             <span @click="toSetting" class="iconfont iconjiantou1"></span>
-        </header>
+        </main>
         <div class="fengetiao"></div>
         <PersonalOpt
                 myfocus="我的关注"
@@ -21,8 +26,8 @@
                 @click.native="$router.push({path:'/myfocus'})"
         />
         <PersonalOpt myfocus="我的跟帖" focusper="跟帖 / 回复"/>
-        <PersonalOpt myfocus="我的收藏" focusper="文章 / 视频"/>
-        <PersonalOpt myfocus="设置" @click.native="toEdit"/>
+        <PersonalOpt myfocus="我的收藏" focusper="文章 / 视频" @click.native="$router.push('/collect')"/>
+        <PersonalOpt myfocus="设置" @click.native="$router.push('/editinfo')"/>
         <div class="logout">
             <AuthBtn
                     btnVal="退出登录"
@@ -66,9 +71,6 @@
             })
         },
         methods: {
-            toEdit() {
-                this.$router.push({path: "/editinfo"});
-            },
             logout() {
                 localStorage.removeItem("token");
                 localStorage.removeItem("userId");
@@ -86,6 +88,22 @@
         display: none
     }
     header {
+        position: relative;
+        height: 15.56vw;
+        line-height: 15.56vw;
+
+        p {
+            text-align: center;
+            font-size: 3.89vw;
+            font-weight: 700;
+        }
+
+        span {
+            position: absolute;
+            margin-left: 4.44vw;
+        }
+    }
+    main {
         height: 36.11vw;
         width: 100vw;
         display: flex;
