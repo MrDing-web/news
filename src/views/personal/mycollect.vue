@@ -25,12 +25,16 @@
                 collectList: []
             }
         },
+        // beforeUpdate() {
+        //     console.log(this.collectList);
+        // },
         created() {
             this.$axios({
                 url: '/user_star'
             }).then(res => {
                 this.collectList = res.data.data;
             })
+
         }
     }
 </script>

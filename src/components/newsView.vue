@@ -1,43 +1,43 @@
 <template>
     <div>
-            <div v-for="newsItem in list" :key="newsItem.id" @click="$router.push('/postdetail?id=' + newsItem.id)">
-                <div v-if="newsItem.type === 1 && newsItem.cover.length < 3 && newsItem.cover.length > 0">
-                    <div class="singleImg">
-                        <div class="left">
-                            <div class="title">{{newsItem.title}}</div>
-                            <div class="info">{{newsItem.user.nickname}} {{newsItem.comment_length}}跟帖</div>
-                        </div>
-                        <div class="right">
-                            <img :src="newsItem.cover[0].url|fixPicUrl" alt="">
-                        </div>
+        <div v-for="(newsItem,index) in list" :key="newsItem.id" @click="$router.push('/postdetail?id=' + newsItem.id)">
+            <div v-if="newsItem.type === 1 && newsItem.cover.length < 3 && newsItem.cover.length > 0">
+                <div class="singleImg">
+                    <div class="left">
+                        <div class="title">{{newsItem.title}}</div>
+                        <div class="info">{{newsItem.user.nickname}} {{commentLen(index)}}跟帖</div>
                     </div>
-                </div>
-                <div class="multiImg" v-if="newsItem.type === 1 && newsItem.cover.length >=3">
-                    <div class="title">
-                        {{newsItem.title}}
-                    </div>
-                    <div class="imgs">
-                        <img :src="newsItem.cover[0].url" alt="">
-                        <img :src="newsItem.cover[1].url" alt="">
-                        <img :src="newsItem.cover[2].url" alt="">
-                    </div>
-                    <div class="info">
-                        {{newsItem.user.nickname}} {{newsItem.comment_length}}跟帖
-                    </div>
-                </div>
-                <div class="video" v-if="newsItem.type === 2 && newsItem.cover.length >= 1">
-                    <div class="title">{{newsItem.title}}</div>
-                    <div class="playArea">
-                        <img :src="newsItem.cover[0].url" alt="" class="playCover">
-                        <div class="playBtn">
-                            <span class="iconfont iconshipin"></span>
-                        </div>
-                    </div>
-                    <div class="info">
-                        {{newsItem.user.nickname}} {{newsItem.comment_length}}跟帖
+                    <div class="right">
+                        <img :src="newsItem.cover[0].url|fixPicUrl" alt="">
                     </div>
                 </div>
             </div>
+            <div class="multiImg" v-if="newsItem.type === 1 && newsItem.cover.length >=3">
+                <div class="title">
+                    {{newsItem.title}}
+                </div>
+                <div class="imgs">
+                    <img :src="newsItem.cover[0].url" alt="">
+                    <img :src="newsItem.cover[1].url" alt="">
+                    <img :src="newsItem.cover[2].url" alt="">
+                </div>
+                <div class="info">
+                    {{newsItem.user.nickname}} {{commentLen(index)}}跟帖
+                </div>
+            </div>
+            <div class="video" v-if="newsItem.type === 2 && newsItem.cover.length >= 1">
+                <div class="title">{{newsItem.title}}</div>
+                <div class="playArea">
+                    <img :src="newsItem.cover[0].url" alt="" class="playCover">
+                    <div class="playBtn">
+                        <span class="iconfont iconshipin"></span>
+                    </div>
+                </div>
+                <div class="info">
+                    {{newsItem.user.nickname}} {{commentLen(index)}}跟帖
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -47,7 +47,23 @@
 <script>
     export default {
         name: "myCollection",
-        props:["list"]
+        props: ["list"],
+        computed: {
+            commentLen() {
+                return function (i) {
+                    if (this.list[i].comments) {
+                        return this.list[i].comments.length
+                    } else if (this.list[i].comment_length) {
+                        return this.list[i].comment_length
+                    } else {
+                        return 0
+                    }
+                }
+
+
+
+            }
+        }
     }
 </script>
 
@@ -143,7 +159,6 @@
                 position: absolute;
                 width: 100%;
                 height: 90%;
-                opacity: 0.6;
             }
 
             .playBtn {

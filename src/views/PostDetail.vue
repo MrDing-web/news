@@ -56,15 +56,26 @@
             </div>
         </div>
         <div class="fenge"></div>
+        <Comment :commentList="item" v-for="item in commentList" :key="item.id"/>
+        <div class="MoreCoomment">
+            <div class="btn" @click="$router.push('/morecomment?id='+ $route.query.id)">
+                更多跟帖
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+    import Comment from "@/components/comment/index.vue"
     export default {
         name: "PostDetail",
+        components:{
+            Comment
+        },
         data() {
             return {
-                detailPost: {}
+                detailPost: {},
+                commentList:[]
             }
         },
         created() {
@@ -73,6 +84,12 @@
                 url: '/post/' + this.$route.query.id
             }).then(res => {
                 this.detailPost = res.data.data;
+            });
+            //获取评论详情
+            this.$axios({
+                url:"/post_comment/" + this.$route.query.id
+            }).then(res=>{
+                this.commentList = res.data.data;
             })
         },
         methods: {
@@ -202,7 +219,7 @@
             line-height: 7.22vw;
 
             /deep/ img {
-                width: 100%;
+                max-width: 100%;
             }
         }
     }
@@ -303,5 +320,20 @@
         width: 100vw;
         height: 1.11vw;
         background-color: #eee;
+    }
+    .MoreCoomment {
+        height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .btn {
+            font-size: 14px;
+            color: #666;
+            padding: 0 20px;
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #888;
+            border-radius: 16px;
+        }
     }
 </style>

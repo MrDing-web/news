@@ -13,6 +13,7 @@
 
             />
             <img v-if="headImg" ref="img" :src="$axios.defaults.baseURL+ headImg" alt/>
+            <img v-else src="../../assets/pq.jpg" alt="">
         </div>
 
         <PersonalOpt
