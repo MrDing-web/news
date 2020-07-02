@@ -7,7 +7,7 @@
                     {{replyContent.user.nickname}}
                     2 小时前
                 </div>
-                <div class="btnReply">
+                <div class="btnReply" @click="reply">
                     回复
                 </div>
             </div>
@@ -22,7 +22,11 @@
 <script>
     export default {
         name: "Parent",
-        props: ["replyContent"]
+        props: ["replyContent"],
+        methods:{
+            reply(){
+            }
+        }
     }
 </script>
 

@@ -62,20 +62,26 @@
                 更多跟帖
             </div>
         </div>
+
+        <CommentInput/>
+
     </div>
 </template>
 
 <script>
     import Comment from "@/components/comment/index.vue"
+    import CommentInput from "@/components/CommentInput.vue"
+
     export default {
         name: "PostDetail",
-        components:{
-            Comment
+        components: {
+            Comment,
+            CommentInput
         },
         data() {
             return {
                 detailPost: {},
-                commentList:[]
+                commentList: []
             }
         },
         created() {
@@ -84,11 +90,15 @@
                 url: '/post/' + this.$route.query.id
             }).then(res => {
                 this.detailPost = res.data.data;
+                console.log(this.detailPost);
             });
             //获取评论详情
             this.$axios({
-                url:"/post_comment/" + this.$route.query.id
-            }).then(res=>{
+                url: "/post_comment/" + this.$route.query.id
+            }).then(res => {
+                if (res.data.data.length >= 3) {
+                    res.data.data.length = 3;
+                }
                 this.commentList = res.data.data;
             })
         },
@@ -282,7 +292,7 @@
 
         .title {
             box-sizing: border-box;
-            padding: 10px 20px;
+            padding: 2.78vw 5.56vw;
             color: #333;
         }
     }
@@ -303,7 +313,8 @@
             justify-content: center;
             border-radius: 4.17vw;
         }
-        .redFinger{
+
+        .redFinger {
             color: red;
         }
 
@@ -321,19 +332,21 @@
         height: 1.11vw;
         background-color: #eee;
     }
+
     .MoreCoomment {
-        height: 90px;
+        height: 25vw;
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-bottom: 13.89vw;
         .btn {
-            font-size: 14px;
+            font-size: 3.89vw;
             color: #666;
-            padding: 0 20px;
-            height: 32px;
-            line-height: 32px;
+            padding: 0 5.56vw;
+            height: 8.89vw;
+            line-height: 8.89vw;
             border: 1px solid #888;
-            border-radius: 16px;
+            border-radius: 4.44vw;
         }
     }
 </style>
