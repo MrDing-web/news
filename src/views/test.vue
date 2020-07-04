@@ -45,8 +45,8 @@
 <style lang="less" scoped>
 button{
     float: left;
-    width: 80px;
-    height: 32px;
+    width: 22.22vw;
+    height: 8.89vw;
     display: block;
 }
 </style>

@@ -83,17 +83,17 @@
         }
     }
     .focusItem {
-        width: 360px;
-        height: 80px;
+        width: 100vw;
+        height: 22.22vw;
         box-sizing: border-box;
-        padding: 20px 16px;
+        padding: 5.56vw 4.44vw;
         border-bottom: 1px solid #e4e4e4;
         display: flex;
         justify-content: space-between;
         .profile {
             img {
-                width: 40px;
-                height: 40px;
+                width: 11.11vw;
+                height: 11.11vw;
                 object-fit: cover;
                 border-radius: 50%;
             }
@@ -101,15 +101,15 @@
     }
     .content{
         flex: 1;
-        margin-left: 20px;
+        margin-left: 5.56vw;
         .title{
-            font-size: 16px;
+            font-size: 4.44vw;
             color:rgb(50,50,50);
         }
         .date{
-            font-size: 14px;
+            font-size: 3.89vw;
             color: #777;
-            padding: 4px 0;
+            padding: 1.11vw 0;
         }
     }
     .unFocus {

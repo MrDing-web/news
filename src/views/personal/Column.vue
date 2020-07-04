@@ -97,7 +97,7 @@
                 text-align: center;
                 border: 1px solid #ccc;
                 margin:1.39vw 0.83vw 1.39vw 4.44vw;
-                font-size: 16px;
+                font-size: 4.44vw;
                 color:#444;
             }
         }

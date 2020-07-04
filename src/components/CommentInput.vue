@@ -15,9 +15,9 @@
             <input type="text" @focus="showTextarea"  :placeholder="placeholderText" />
             <div class="pinglunWrapper">
                 <span class="iconfont iconpinglun-"></span>
-                <div class="num">1028</div>
+                <div class="num" @click="$router.push('/morecomment?id='+ $route.query.id)">{{commentCount}}</div>
             </div>
-            <span class="iconfont iconshoucang"></span>
+            <span class="iconfont iconshoucang" @click="shoucang"></span>
             <span class="iconfont iconfenxiang"></span>
         </div>
     </div>
@@ -33,7 +33,7 @@
                 flag:true
             }
         },
-        props:["parentInfo"],
+        props:["parentInfo","commentCount"],
         computed:{
                 placeholderText() {
                     if (this.parentInfo.nickname) {
@@ -81,6 +81,19 @@
                 this.$nextTick(()=>{
                     this.$refs.textarea.focus();
                 })
+            },
+            shoucang(e){
+                this.$axios({
+                    url:"/post_star/" + this.$route.query.id
+                }).then(res=>{
+                    if(res.data.message==="收藏成功"){
+                        e.target.style.color="#CD853F";
+                    }
+                    if(res.data.message==="取消成功"){
+                        e.target.style.color="#000";
+                    }
+                    this.$toast.success(res.data.message);
+                })
             }
         }
     }
@@ -91,7 +104,7 @@
         position: fixed;
         bottom: 0;
         left: 0;
-        background: #f2f2f2;
+        background-color: #f2f2f2;
         width: 100%;
         padding: 2.778vw;
         box-sizing: border-box;
@@ -124,6 +137,8 @@
                     font-size: 3.333vw;
                     background: red;
                     color: white;
+                    width: 8.33vw;
+                    text-align: center;
                     line-height: 3.889vw;
                     height: 3.889vw;
                     border-radius: 1.944vw;

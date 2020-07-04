@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <CommentInput @reloadComment="loadComment" ref="commentInput" :parentInfo="commentInfo"/>
+        <CommentInput @reloadComment="loadComment" ref="commentInput" :parentInfo="commentInfo" :commentCount="commentCount"/>
 
     </div>
 </template>
@@ -87,7 +87,8 @@
             return {
                 detailPost: {},
                 commentList: [],
-                commentInfo:{}
+                commentInfo:{},
+                commentCount:0
             }
         },
         created() {
@@ -96,7 +97,6 @@
                 url: '/post/' + this.$route.query.id
             }).then(res => {
                 this.detailPost = res.data.data;
-                console.log(this.detailPost);
             });
             //获取评论详情
             this.loadComment();
@@ -151,8 +151,7 @@
                 this.$axios({
                     url: '/post_comment/' + this.$route.query.id
                 }).then(res=>{
-                    console.log(res.data);
-
+                    this.commentCount = res.data.data.length;
                     // 2. 对于评论数组进行改造只剩下三条
                     const commentList = res.data.data;
                     // 这里不可以直接设为3, 需要考虑数据不足的情况

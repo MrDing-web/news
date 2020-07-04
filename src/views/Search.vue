@@ -111,13 +111,13 @@
         height: 13.89vw;
         background-color: #fff;
         display: flex;
-        padding: 6px 16px 0 16px;
+        padding: 1.67vw 4.44vw 0 4.44vw;
         box-sizing: border-box;
         justify-content: space-between;
         align-items: center;
 
         .iconjiantou2 {
-            font-size: 16px;
+            font-size: 4.44vw;
         }
 
         .input {
@@ -127,19 +127,19 @@
 
             span.iconsearch {
                 position: absolute;
-                left: 34px;
-                font-size: 16px;
+                left: 9.44vw;
+                font-size: 4.44vw;
                 color: #ccc;
             }
 
             input {
                 flex: 1;
-                margin: 0 16px;
-                height: 36px;
-                line-height: 36px;
-                border-radius: 20px;
+                margin: 0 4.44vw;
+                height: 10vw;
+                line-height: 10vw;
+                border-radius: 5.56vw;
                 border: 1px solid #ccc;
-                padding: 4px 16px;
+                padding: 1.11vw 4.44vw;
             }
         }
 
@@ -155,29 +155,29 @@
         padding: 0 4.44vw;
         box-sizing: border-box;
         .line{
-            width: 328px;
+            width: 91.11vw;
             height: 0;
             border: 1px solid #eee;
-            margin: 16px 0;
+            margin: 4.44vw 0;
         }
         .des {
             font-weight: bolder;
-            font-size: 16px;
-            height: 30px;
-            line-height: 30px;
+            font-size: 4.44vw;
+            height: 8.33vw;
+            line-height: 8.33vw;
             color: #444;
         }
 
         .content {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 10px;
+            margin-bottom: 2.78vw;
             justify-content: flex-start;
             
             span {
-                font-size: 14px;
+                font-size: 3.89vw;
                 color: #333;
-                margin:6px 27px;
+                margin:1.67vw 7.5vw;
             }
         }
 

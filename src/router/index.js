@@ -12,6 +12,7 @@ import Test from "@/views/test.vue"
 import PostDetail from "@/views/PostDetail.vue"
 import MoreComment from "@/views/MoreComment.vue"
 import Column from "@/views/personal/Column.vue"
+import Thread from "@/views/personal/Thread.vue"
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ const routes = [
         path:"/column",
         name: "Column",
         component: Column
+    },
+    {
+        path:"/thread",
+        name:"Thread",
+        component: Thread
     },
     {
         path: '/morecomment',
