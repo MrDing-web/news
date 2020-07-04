@@ -27,6 +27,7 @@
         />
         <PersonalOpt myfocus="我的跟帖" focusper="跟帖 / 回复"/>
         <PersonalOpt myfocus="我的收藏" focusper="文章 / 视频" @click.native="$router.push('/collect')"/>
+        <PersonalOpt myfocus="栏目管理" focusper="添加 / 删除" @click.native="$router.push('/column')"/>
         <PersonalOpt myfocus="设置" @click.native="$router.push('/editinfo')"/>
         <div class="logout">
             <AuthBtn

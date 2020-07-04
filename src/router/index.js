@@ -11,6 +11,7 @@ import MyCollect from "@/views/personal/mycollect.vue"
 import Test from "@/views/test.vue"
 import PostDetail from "@/views/PostDetail.vue"
 import MoreComment from "@/views/MoreComment.vue"
+import Column from "@/views/personal/Column.vue"
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,11 @@ const routes = [
         path: '/myfocus',
         name: 'myfocus',
         component: Myfocus
+    },
+    {
+        path:"/column",
+        name: "Column",
+        component: Column
     },
     {
         path: '/morecomment',

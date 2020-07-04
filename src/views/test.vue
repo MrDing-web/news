@@ -1,6 +1,6 @@
 <template>
     <div @click="add">
-        <button>1</button>
+        <button>阿信</button>
         <button>2</button>
         <button>3</button>
         <button>4</button>
@@ -30,7 +30,10 @@
             add(e){
                 const id = e.target.innerHTML;
                 this.$axios({
-                    url:"/user_follows/" + id
+                    url:"/post_search_recommend",
+                    params:{
+                        keyword:id
+                    }
                 }).then(res=>{
                     console.log(res);
                 })

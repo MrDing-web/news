@@ -1,13 +1,18 @@
 <template>
     <div>
-        <Parent :replyContent="replyContent.parent" v-if="replyContent.parent"/>
         <div class="parentComment">
+        <Parent
+                :replyContent="replyContent.parent"
+                v-if="replyContent.parent"
+                @parentCallReply="diguiCallReply"
+                :parentDepth="parentDepth-1"
+        />
             <div class="info">
                 <div class="user">
-                    {{replyContent.user.nickname}}
+                    {{parentDepth}} {{replyContent.user.nickname}}
                     2 小时前
                 </div>
-                <div class="btnReply" @click="reply">
+                <div class="btnReply" @click="parentCallReply">
                     回复
                 </div>
             </div>
@@ -22,9 +27,16 @@
 <script>
     export default {
         name: "Parent",
-        props: ["replyContent"],
+        props: ["replyContent", 'parentDepth'],
         methods:{
-            reply(){
+            parentCallReply(){
+                this.$emit("parentCallReply",{
+                    id:this.replyContent.id,
+                    nickname:this.replyContent.user.nickname
+                })
+            },
+            diguiCallReply(parentInfo){
+                this.$emit('parentCallReply', parentInfo)
             }
         }
     }
@@ -32,9 +44,9 @@
 
 <style lang="less" scoped>
     .parentComment {
-        font-size: 14px;
+        font-size: 3.89vw;
         color: #888;
-        padding: 10px;
+        padding: 2.78vw;
         border: 1px solid #e4e4e4;
     }
 
@@ -43,11 +55,11 @@
         justify-content: space-between;
 
         .btnReply {
-            font-size: 12px;
+            font-size: 3.33vw;
         }
     }
 
     .content {
-        padding: 10px 0;
+        padding: 2.78vw 0;
     }
 </style>

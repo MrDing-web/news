@@ -56,14 +56,19 @@
             </div>
         </div>
         <div class="fenge"></div>
-        <Comment :commentList="item" v-for="item in commentList" :key="item.id"/>
+        <Comment
+                :commentList="item"
+                v-for="item in commentList"
+                :key="item.id"
+                @callReply="callReply"
+        />
         <div class="MoreCoomment">
             <div class="btn" @click="$router.push('/morecomment?id='+ $route.query.id)">
                 更多跟帖
             </div>
         </div>
 
-        <CommentInput/>
+        <CommentInput @reloadComment="loadComment" ref="commentInput" :parentInfo="commentInfo"/>
 
     </div>
 </template>
@@ -81,7 +86,8 @@
         data() {
             return {
                 detailPost: {},
-                commentList: []
+                commentList: [],
+                commentInfo:{}
             }
         },
         created() {
@@ -93,14 +99,7 @@
                 console.log(this.detailPost);
             });
             //获取评论详情
-            this.$axios({
-                url: "/post_comment/" + this.$route.query.id
-            }).then(res => {
-                if (res.data.data.length >= 3) {
-                    res.data.data.length = 3;
-                }
-                this.commentList = res.data.data;
-            })
+            this.loadComment();
         },
         methods: {
             isFocus() {
@@ -141,6 +140,29 @@
                         this.$refs.dianzan.classList.remove("redFinger")
                         this.detailPost.like_length--;
                     }
+                })
+            },
+            callReply(commentInfo){
+                this.commentInfo = commentInfo;
+                this.$refs.commentInput.showTextarea();
+            },
+            loadComment() {
+                // 1. 除了文章详情还要获取评论列表
+                this.$axios({
+                    url: '/post_comment/' + this.$route.query.id
+                }).then(res=>{
+                    console.log(res.data);
+
+                    // 2. 对于评论数组进行改造只剩下三条
+                    const commentList = res.data.data;
+                    // 这里不可以直接设为3, 需要考虑数据不足的情况
+                    if (commentList.length > 3) {
+                        commentList.length = 3;
+                    }
+
+                    this.commentList = commentList;
+                    // 优化二. 回复完别人之后, 默认将被回复人的数据清空
+                    this.commentInfo = {}
                 })
             }
         }

@@ -30,9 +30,18 @@
         data() {
             return {
                 content: '',
-                placeholderText:'',
                 flag:true
             }
+        },
+        props:["parentInfo"],
+        computed:{
+                placeholderText() {
+                    if (this.parentInfo.nickname) {
+                        return "回复 @ " + this.parentInfo.nickname
+                    }else {
+                        return '写评论'
+                    }
+            },
         },
         methods: {
             hideTextarea(){
@@ -44,7 +53,12 @@
             send(){
                 //获取文章id
                 const postId = this.$route.query.id;
-                // console.log(postId);
+                let data = {
+                    content: this.content
+                }
+                if (this.parentInfo.id) {
+                    data.parent_id = this.parentInfo.id
+                }
                 if(this.content.trim()===''){
                     this.$toast.fail("输入的内容不能为空！");
                     return false;
@@ -52,11 +66,14 @@
                 this.$axios({
                     url:"/post_comment/" + postId,
                     method:"post",
-                    data:{
-                        content: this.content
-                    }
+                    data
                 }).then(res=>{
                     console.log(res);
+                    if (res.data.message === '评论发布成功') {
+                        // 优化1. 提醒父页面更新评论数据
+                        this.$emit('reloadComment')
+                        this.content = ''
+                    }
                 })
             },
             showTextarea(){
@@ -96,7 +113,7 @@
             }
 
             .iconfont {
-                font-size: 22px;
+                font-size: 6.11vw;
             }
 
             .pinglunWrapper {
@@ -126,20 +143,20 @@
                 background-color: #d7d7d7;
                 border: none;
                 outline: none;
-                border-radius: 10px;
-                padding: 12px;
+                border-radius: 2.78vw;
+                padding: 3.33vw;
                 resize: none;
             }
 
             .btnSend {
-                height: 26px;
-                line-height: 26px;
-                font-size: 12px;
-                border-radius: 13px;
-                padding: 0 16px;
+                height: 7.22vw;
+                line-height: 7.22vw;
+                font-size: 3.33vw;
+                border-radius: 3.61vw;
+                padding: 0 4.44vw;
                 color: white;
                 background: red;
-                margin: 0 10px;
+                margin: 0 2.78vw;
             }
         }
     }
