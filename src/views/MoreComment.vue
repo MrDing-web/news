@@ -18,22 +18,23 @@
     import Comment from "@/components/comment/index.vue"
     export default {
         name: "MoreComment",
-        components:{
+        components: {
             Comment
         },
-        data(){
-            return{
-                commentList:[],
-                loading:false,
-                finished:true
+        data() {
+            return {
+                commentList: [],
+                loading: false,
+                finished: true
             }
         },
         created() {
             this.$axios({
-                url:"/post_comment/" + this.$route.query.id
-            }).then(res=>{
+                url: "/post_comment/" + this.$route.query.id
+            }).then(res => {
                 this.commentList = res.data.data;
-            })
+            });
+
         }
     }
 </script>
